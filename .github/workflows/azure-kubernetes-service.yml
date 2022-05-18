@@ -47,7 +47,7 @@ jobs:
     - uses: actions/checkout@main
     
     # Connect to Azure Container Registry (ACR)
-    - uses: azure/docker-login@v1
+    - uses: actions/checkout@v2
       with:
         login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }} 
@@ -57,7 +57,7 @@ jobs:
     - run: |
         docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
         docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-      working-directory: test/Dockerfile.txt .
+      working-directory: test/Dockerfile.txt
     
     # Set the target Azure Kubernetes Service (AKS) cluster. 
     - uses: azure/aks-set-context@v1
