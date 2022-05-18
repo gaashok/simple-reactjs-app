@@ -57,7 +57,7 @@ jobs:
     - run: |
         docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
         docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-      working-directory: ./Dockerfile
+      working-directory: Dockerfile
     
     # Set the target Azure Kubernetes Service (AKS) cluster. 
     - uses: azure/aks-set-context@v1
@@ -85,7 +85,7 @@ jobs:
       with:
         manifests: |
           ${{ github.workspace }}/manifests/deployment.yaml
-          ${{ github.workspace }}/manifests/Service.yaml
+          ${{ github.workspace }}/manifests/service.yaml
         images: |
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
         imagepullsecrets: |
